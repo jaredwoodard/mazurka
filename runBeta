@@ -1,0 +1,19 @@
+# Calculate rolling beta
+# Takes prices of assets and calculates rolling n-period beta from daily returns
+# y is the index or benchmark asset
+
+runBeta <- function(x, y, n=42){
+  require(quantmod)
+  xr <- dailyReturn(x)
+  yr <- dailyReturn(y)
+  cov.f <- runCov(xr, yr, n=n) 
+  var.f <- runVar(yr, n=n)
+  runBeta <- cov.f / var.f
+  return(runBeta)
+}
+
+
+# Example
+# getSymbols(c('SPY','EEM'))
+# blargz <- runBeta( Ad(EEM), Ad(SPY))
+# chartSeries( blargz)
